@@ -1,12 +1,4 @@
 <?php
-/*
-Plugin Name: Contact Widget
-Description: A widget pulling info from the custom post type 'contacts'
-Version: 1.0
-Author: Camilla Westin
-Author URI: http://camillawestin.se
-*/
-
 
 // Block direct requests
 if ( !defined('ABSPATH') )

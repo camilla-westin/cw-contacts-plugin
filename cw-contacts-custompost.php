@@ -6,7 +6,7 @@
 * Author: Camilla Westin
 * Author URI: http://www.camillawestin.se
 */
-
+include('contact-widget.php');
 // Registers a new custom post showing contacts
 
 	add_action( 'init', 'contacts_post_type' );
@@ -38,8 +38,7 @@
 	add_filter( 'enter_title_here', 'change_contacts_title' );
 
 
-// Add template files
-class PageTemplater {
+	class PageTemplater {
 
 		/**
          * A Unique Identifier
@@ -70,9 +69,9 @@ class PageTemplater {
 
         } 
 
-/**
- * Initializes the plugin by setting filters and administration functions.
- */
+        /**
+         * Initializes the plugin by setting filters and administration functions.
+         */
         private function __construct() {
 
                 $this->templates = array();
@@ -102,17 +101,17 @@ class PageTemplater {
 
                 // Add your templates to this array.
                 $this->templates = array(
-                        'page-contacts.php'     => 'Contact',
+                        'page-contacts.php'     => 'Contact'
                 );
 				
         } 
 
 
-/**
- * Adds our template to the pages cache in order to trick WordPress
- * into thinking the template file exists where it doesn't really exist.
- *
- */
+        /**
+         * Adds our template to the pages cache in order to trick WordPress
+         * into thinking the template file exists where it doens't really exist.
+         *
+         */
 
         public function register_project_templates( $atts ) {
 
@@ -141,9 +140,9 @@ class PageTemplater {
 
         } 
 
-/**
- * Checks if the template is assigned to the page
- */
+        /**
+         * Checks if the template is assigned to the page
+         */
         public function view_project_template( $template ) {
 
                 global $post;
