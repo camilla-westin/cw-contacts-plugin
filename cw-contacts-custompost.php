@@ -1,12 +1,5 @@
 <?php
-/**
-* Plugin Name: CW Contacts
-* Description: Adds contact as custom post types and a widget
-* Version: 1.0
-* Author: Camilla Westin
-* Author URI: http://www.camillawestin.se
-*/
-include('contact-widget.php');
+
 // Registers a new custom post showing contacts
 
 	add_action( 'init', 'contacts_post_type' );
