@@ -16,6 +16,54 @@
 	}
 
 
+ 
+// Add the Events Meta Boxes
+    
+function add_contact_metaboxes($post) {
+      add_meta_box('cw_contact_details', 'Details', 'cw_contact_details', 'contacts', 'normal', 'default');
+    }
+
+add_action('add_meta_boxes','add_contact_metaboxes');
+
+function cw_contact_details($post){
+
+    $contactemail = get_post_meta($post->ID, 'contactemail', true);
+    $contactrole = get_post_meta($post->ID, 'contactrole', true);
+?>
+    <table width="100%" border="0" cellspacing="4" cellpadding="0">
+        <tr>
+            <td width="16%">
+                <strong>Email:</strong>
+            </td>
+            <td width="84%">
+                <input type="text" name="contactemail" id="contactemail" size="72%" value="<?php echo $contactemail ?>" />
+            </td>
+        </tr>
+        <tr>
+            <td width="16%">
+                <strong>Role:</strong>
+            </td>
+            <td width="50%">
+                <input type="text" name="contactrole" id="contactrole" size="72%" value="<?php echo $contactrole ?>" />
+            </td>
+        </tr>
+    </table>
+<?php
+}
+
+
+add_action('save_post','save_contact_details');
+function save_contact_details(){
+    global $post;
+
+    $contactemail = $_POST['contactemail'];
+    update_post_meta( $post->ID, 'contactemail', $contactemail);
+
+    $contactrole = $_POST['contactrole'];
+    update_post_meta( $post->ID, 'contactrole', $contactrole);
+}
+
+
 
 //Changes the default "Enter title here" placeholder to "Enter name" for our contact custom posts
 	function change_contacts_title( $title ){
@@ -31,7 +79,12 @@
 	add_filter( 'enter_title_here', 'change_contacts_title' );
 
 
-	class PageTemplater {
+
+
+
+//Add template files to theme
+
+class PageTemplater {
 
 		/**
          * A Unique Identifier
@@ -166,3 +219,48 @@
 } 
 
 add_action( 'plugins_loaded', array( 'PageTemplater', 'get_instance' ) );
+
+//Display template for single contact post
+add_filter( 'single_template', 'get_contact_single_template' );
+function locate_plugin_template($template_names, $load = false, $require_once = true )
+{
+    if ( !is_array($template_names) )
+        return '';
+    
+    $located = '';
+    
+    $this_plugin_dir = WP_PLUGIN_DIR.'/'.str_replace( basename( __FILE__), "", plugin_basename(__FILE__) );
+    
+    foreach ( $template_names as $template_name ) {
+        if ( !$template_name )
+            continue;
+        if ( file_exists(STYLESHEETPATH . '/' . $template_name)) {
+            $located = STYLESHEETPATH . '/' . $template_name;
+            break;
+        } else if ( file_exists(TEMPLATEPATH . '/' . $template_name) ) {
+            $located = TEMPLATEPATH . '/' . $template_name;
+            break;
+        } else if ( file_exists( $this_plugin_dir .  $template_name) ) {
+            $located =  $this_plugin_dir . $template_name;
+            break;
+        }
+    }
+    
+    if ( $load && '' != $located )
+        load_template( $located, $require_once );
+    
+    return $located;
+}
+
+function get_contact_single_template($template)
+{
+    global $wp_query;
+    $object = $wp_query->get_queried_object();
+    
+    if ( 'contacts' == $object->post_type ) {
+        $templates = array('single-' . $object->post_type . '.php', 'single.php');
+        $template = locate_plugin_template($templates);
+    }
+
+    return $template;
+}

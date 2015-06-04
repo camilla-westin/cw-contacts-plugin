@@ -67,6 +67,10 @@ class CW_Contacts_Widget extends WP_Widget {
 			echo get_the_post_thumbnail( $post->ID, array(250,500), array('class'=>'contact_featured_img') );
 			echo '<h3 class="contact_widget_title">' . apply_filters( 'widget_title', $post->post_title ). '</h3>';
 			echo '<p class="contact_widget_desc">' . $post->post_excerpt . '</p>';
+
+			$emailadress = get_post_meta($post->ID, "contactemail", true);
+			echo '<div class="contacts-single-email"><a href="mailto:' . $emailadress . '">' . $emailadress . '</a></div>';
+
 			echo '<p class="contact_widget_readmore"><a href="' . get_permalink( $post->ID ) . '" title="More info, ' . $post->post_title . '">More info</a></p>';
 			
 		} else {

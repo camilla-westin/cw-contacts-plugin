@@ -23,7 +23,13 @@ get_header(); ?>
 	<div class="contacts-item">	
 		<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 		<?php the_post_thumbnail(); ?>
-		<div class="contacts-content"><?php the_content(); ?></div>
+		<div class="contacts-content"><?php the_content(); ?></div> 
+
+		 <?php $emailadress = get_post_meta($post->ID, "contactemail", true); ?>
+		<div class="contacts-page-email">
+			<a href="mailto:<?php echo $emailadress; ?>"><?php echo $emailadress; ?></a>
+		</div>
+		
 	</div>	
 	<?php endwhile; endif; wp_reset_postdata(); ?>
 
