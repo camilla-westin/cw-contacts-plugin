@@ -4,4 +4,4 @@ Wordpress plugin that adds a new custom post type called contacts with template 
 
 <h2>To do</h2>
 
-<p>Add fields for phonenumber, email, social media etc.</p>
+<p>Add classes to divs</p>

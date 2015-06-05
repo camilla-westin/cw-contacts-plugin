@@ -56,17 +56,19 @@ class CW_Contacts_Widget extends WP_Widget {
 
 		} else {
 
-			$post = get_post( $instance['contact_id'] );	
-
+			$post = get_post( $instance['contact_id'] );
+			
 		}
 
 		if ( array_key_exists('before_widget', $args) ) echo $args['before_widget'];
 		
 		if ( $post ) {
+		
+			
+			echo '<h3 class="contact_name">' . $post->post_title . '</h3>';
 
-			echo get_the_post_thumbnail( $post->ID, array(250,500), array('class'=>'contact_featured_img') );
-			echo '<h3 class="contact_widget_title">' . apply_filters( 'widget_title', $post->post_title ). '</h3>';
-			echo '<p class="contact_widget_desc">' . $post->post_excerpt . '</p>';
+			echo get_the_post_thumbnail( $post->ID, array(250,500), array('class'=>'contact_widget_img') );
+
 			$contactrole = get_post_meta($post->ID, "contactrole", true);
 			echo '<div>' . $contactrole . '</div>';
 
@@ -76,7 +78,35 @@ class CW_Contacts_Widget extends WP_Widget {
 			$contactphone = get_post_meta($post->ID, "contactphone", true);
 			echo '<div>' . $contactphone . '</div>';
 
-			echo '<p class="contact_widget_readmore"><a href="' . get_permalink( $post->ID ) . '" title="More info, ' . $post->post_title . '">More info</a></p>';
+			$contact_twitterlink = get_post_meta($post->ID, "contacttwitter", true);
+			if(!empty($contact_twitterlink)) {  
+				echo '<div class="contact-twitter"><a href="';
+				echo $contact_twitterlink; 
+				echo'">Twitter</a></div>';
+			}
+
+
+			$contact_linkedinlink = get_post_meta($post->ID, "contactlinkedin", true);
+			if(!empty($contact_linkedinlink)) { 
+				echo '<div class="contact-linkedin"><a href="';
+				echo $contact_linkedinlink; 
+				echo '">Linkedin</a></div>';
+			} else {
+				echo '';
+			}
+
+			$contact_facebooklink = get_post_meta($post->ID, "contactfacebook", true);
+
+			if(!empty($contact_facebooklink)) {
+				echo '<div class="contact-facebook"><a href="';
+				echo $contact_facebooklink;
+				echo '">Facebook</a>';
+			} else {
+				echo '';
+			}
+
+
+			echo '<p class="contact_widget_readmore"><a href="' . get_permalink( $post->ID ) . '" title="More info' . $post->post_title . '">More info</a></p>';
 			
 		} else {
 
@@ -94,7 +124,8 @@ class CW_Contacts_Widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		
+
+		// Check values	
 		if ( isset( $instance[ 'contact_id' ] ) ) {
 			$contact_id = $instance[ 'contact_id' ];
 		}
@@ -103,9 +134,8 @@ class CW_Contacts_Widget extends WP_Widget {
 		}
 		?>
 		
-		<p>
-			<label for="<?php echo $this->get_field_id( 'contact_id' ); ?>"><?php _e( 'Contact:' ); ?></label> 
 			
+			<label for="<?php echo $this->get_field_id( 'contact_id' ); ?>"><?php _e( 'Contact:' ); ?></label> 		
 			<select id="<?php echo $this->get_field_id( 'contact_id' ); ?>" name="<?php echo $this->get_field_name( 'contact_id' ); ?>">
 				
 				<?php 

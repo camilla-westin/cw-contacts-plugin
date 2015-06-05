@@ -11,6 +11,7 @@
 	        'singular_name' => __( 'Contact', 'c-framework' )
 	      ),
 	      'public' => true,
+          'supports' => array( 'title', 'editor', 'thumbnail' ),
 	    )
 	  );
 	}
@@ -20,16 +21,20 @@
 // Add the Events Meta Boxes
     
 function add_contact_metaboxes($post) {
-      add_meta_box('cw_contact_details', 'Details', 'cw_contact_details', 'contacts', 'normal', 'default');
+      add_meta_box('cw_contact_details', 'Contact details', 'cw_contact_details', 'contacts', 'normal', 'default');
     }
 
 add_action('add_meta_boxes','add_contact_metaboxes');
+
 
 function cw_contact_details($post){
 
     $contactemail = get_post_meta($post->ID, 'contactemail', true);
     $contactrole = get_post_meta($post->ID, 'contactrole', true);
     $contactphone = get_post_meta($post->ID, 'contactphone', true);
+    $contacttwitter = get_post_meta($post->ID, 'contacttwitter', true);
+    $contactlinkedin = get_post_meta($post->ID, 'contactlinkedin', true);
+    $contactfacebook = get_post_meta($post->ID, 'contactfacebook', true);
 ?>
     <table width="100%" border="0" cellspacing="4" cellpadding="0">
          <tr>
@@ -37,7 +42,7 @@ function cw_contact_details($post){
                 <strong>Role:</strong>
             </td>
             <td width="50%">
-                <input type="text" name="contactrole" id="contactrole" size="72%" value="<?php echo $contactrole ?>" />
+                <input type="text" name="contactrole" id="contactrole" size="50%" value="<?php echo $contactrole ?>" />
             </td>
         </tr>
         <tr>
@@ -45,7 +50,7 @@ function cw_contact_details($post){
                 <strong>Email:</strong>
             </td>
             <td width="50%">
-                <input type="text" name="contactemail" id="contactemail" size="72%" value="<?php echo $contactemail ?>" />
+                <input type="text" name="contactemail" id="contactemail" size="50%" value="<?php echo $contactemail ?>" />
             </td>
         </tr>
         <tr>
@@ -53,7 +58,31 @@ function cw_contact_details($post){
                 <strong>Phonenumber:</strong>
             </td>
             <td width="50%">
-                <input type="text" name="contactphone" id="contactphone" size="72%" value="<?php echo $contactphone ?>" />
+                <input type="text" name="contactphone" id="contactphone" size="50%" value="<?php echo $contactphone ?>" />
+            </td>
+        </tr>
+        <tr>
+            <td width="16%">
+                <strong>Twitter profile (url):</strong>
+            </td>
+            <td width="50%">
+                <input type="text" name="contacttwitter" id="contacttwitter" size="50%" value="<?php echo $contacttwitter ?>" />
+            </td>
+        </tr>
+         <tr>
+            <td width="16%">
+                <strong>Linkedin profile (url):</strong>
+            </td>
+            <td width="50%">
+                <input type="text" name="contactlinkedin" id="contactlinkedin" size="50%" value="<?php echo $contactlinkedin ?>" />
+            </td>
+        </tr>
+         <tr>
+            <td width="16%">
+                <strong>Facebook profile (url):</strong>
+            </td>
+            <td width="50%">
+                <input type="text" name="contactfacebook" id="contactfacebook" size="50%" value="<?php echo $contactfacebook ?>" />
             </td>
         </tr>
        
@@ -74,6 +103,18 @@ function save_contact_details(){
 
     $contactphone = $_POST['contactphone'];
     update_post_meta( $post->ID, 'contactphone', $contactphone);
+
+    $contacttwitter = $_POST['contacttwitter'];
+    update_post_meta( $post->ID, 'contacttwitter', $contacttwitter);
+
+    $contactlinkedin = $_POST['contactlinkedin'];
+    update_post_meta( $post->ID, 'contactlinkedin', $contactlinkedin);
+
+    $contactfacebook = $_POST['contactfacebook'];
+    update_post_meta( $post->ID, 'contactfacebook', $contactfacebook);
+
+
+
 }
 
 
