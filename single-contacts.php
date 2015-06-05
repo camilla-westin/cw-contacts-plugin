@@ -13,11 +13,15 @@
 
 		<h1 style="red"><?php the_title(); ?></h1>
 		<div class="contacts-single-content"><?php the_content(); ?></p>
-		 <?php $emailadress = get_post_meta($post->ID, "contactemail", true); ?>
+
+		<div><?php echo get_post_meta($post->ID, "contactrole", true); ?></div>
+
+		<?php $emailadress = get_post_meta($post->ID, "contactemail", true); ?>
 		<div class="contacts-single-email">
 			<a href="mailto:<?php echo $emailadress; ?>"><?php echo $emailadress; ?></a>
 		</div>
-		<div><?php echo get_post_meta($post->ID, "contactrole", true); ?></div>
+		
+		<div><?php echo get_post_meta($post->ID, "contactphone", true); ?></div>
 
 	<?php endwhile; else : ?>
 		<p><?php _e( 'Sorry, no posts matched your criteria.', 'c-framework' ); ?></p>

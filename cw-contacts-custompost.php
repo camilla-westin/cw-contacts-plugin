@@ -29,17 +29,10 @@ function cw_contact_details($post){
 
     $contactemail = get_post_meta($post->ID, 'contactemail', true);
     $contactrole = get_post_meta($post->ID, 'contactrole', true);
+    $contactphone = get_post_meta($post->ID, 'contactphone', true);
 ?>
     <table width="100%" border="0" cellspacing="4" cellpadding="0">
-        <tr>
-            <td width="16%">
-                <strong>Email:</strong>
-            </td>
-            <td width="84%">
-                <input type="text" name="contactemail" id="contactemail" size="72%" value="<?php echo $contactemail ?>" />
-            </td>
-        </tr>
-        <tr>
+         <tr>
             <td width="16%">
                 <strong>Role:</strong>
             </td>
@@ -47,6 +40,23 @@ function cw_contact_details($post){
                 <input type="text" name="contactrole" id="contactrole" size="72%" value="<?php echo $contactrole ?>" />
             </td>
         </tr>
+        <tr>
+            <td width="16%">
+                <strong>Email:</strong>
+            </td>
+            <td width="50%">
+                <input type="text" name="contactemail" id="contactemail" size="72%" value="<?php echo $contactemail ?>" />
+            </td>
+        </tr>
+        <tr>
+            <td width="16%">
+                <strong>Phonenumber:</strong>
+            </td>
+            <td width="50%">
+                <input type="text" name="contactphone" id="contactphone" size="72%" value="<?php echo $contactphone ?>" />
+            </td>
+        </tr>
+       
     </table>
 <?php
 }
@@ -61,6 +71,9 @@ function save_contact_details(){
 
     $contactrole = $_POST['contactrole'];
     update_post_meta( $post->ID, 'contactrole', $contactrole);
+
+    $contactphone = $_POST['contactphone'];
+    update_post_meta( $post->ID, 'contactphone', $contactphone);
 }
 
 
